@@ -1,42 +1,55 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Main from './components/main/main'
-
-
+import InfiniteScroll from "react-infinite-scroll-component";
+import Repository from './components/repository/repository.component'
 import { connect } from "react-redux";
 import { getData } from "./redux/repositories/repositories.action";
+import './App.css';
 
 class App extends React.Component {
-  constructor(props) {
-  super(props);
-  
-}
   
 componentDidMount() {
-  this.props.getData();
+  const page = this.props.page ? this.props.page : 1;  
+  this.props.getData(page);
 }
+
+fetchMoreData(){
+  const page = this.props.page ? this.props.page : 1;  
+  console.log(page)
+  getData(parseInt(page)+1);
+};
 
   render(){
     return (
       <div className="App">
-        <ul>
-          {this.props.articles.map(el => (
-            <li key={el.id}>{el.title}</li>
-         ))}
-      </ul>
+        
+         {
+            <InfiniteScroll
+            dataLength={this.props.items.length}
+            next={() =>{ this.props.getData(parseInt(this.props.page)+1);
+            }}
+            hasMore={true}
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>All repositories was apresented </b>
+              </p>
+            }
+          >
+            {this.props.items.map((item, index) => <Repository id={index} key={index} item={item}></Repository> )}
+            </InfiniteScroll>
+        }
+    
       </div>
     );
   }
 }
 
-
 function mapStateToProps(state) {
   return {
-    articles: state.articles.remoteArticles.slice(0, 10)
+    items: state.repositories.items,
+    page: state.repositories.page
   };
 }
-
 
 export default connect(
   mapStateToProps,
