@@ -1,26 +1,44 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Main from './components/main/main'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+import { connect } from "react-redux";
+import { getData } from "./redux/repositories/repositories.action";
+
+class App extends React.Component {
+  constructor(props) {
+  super(props);
+  
+}
+  
+componentDidMount() {
+  this.props.getData();
 }
 
-export default App;
+  render(){
+    return (
+      <div className="App">
+        <ul>
+          {this.props.articles.map(el => (
+            <li key={el.id}>{el.title}</li>
+         ))}
+      </ul>
+      </div>
+    );
+  }
+}
+
+
+function mapStateToProps(state) {
+  return {
+    articles: state.articles.remoteArticles.slice(0, 10)
+  };
+}
+
+
+export default connect(
+  mapStateToProps,
+{ getData }
+)(App);
