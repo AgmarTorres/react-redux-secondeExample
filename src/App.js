@@ -14,7 +14,6 @@ componentDidMount() {
 
 fetchMoreData(){
   const page = this.props.page ? this.props.page : 1;  
-  console.log(page)
   getData(parseInt(page)+1);
 };
 
