@@ -11,7 +11,7 @@ const Pull = ({item}) =>(
 
       <div className='pull-data'>
          <p   className = "pull-title"><span className='span-bold'>Title: </span>{item.title}</p>
-         <p   className = "pull-date"><span className='span-bold'>Date:</span> {item.created_at}</p>
+         <p   className = "pull-date"><span className='span-bold'>Date:</span> {Date(item.created_at)}</p>
          <p   className = "pull-body">{item.body} </p>
       </div>
       

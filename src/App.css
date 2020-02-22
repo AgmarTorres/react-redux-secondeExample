@@ -1,7 +1,9 @@
 body{
-  font-family: 'Open Sans Condensed';
+  font-family: 'Quicksand', ;
   padding: 20px 60px;
 }
+
+.title{margin-bottom: 10vh;}
 
 .App {
   text-align: center;

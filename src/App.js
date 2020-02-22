@@ -21,7 +21,7 @@ fetchMoreData(){
   render(){
     return (
       <div className="App">
-        
+      <h1 className="title"> Git Repositories</h1>
          {
             <InfiniteScroll
             dataLength={this.props.items.length}
